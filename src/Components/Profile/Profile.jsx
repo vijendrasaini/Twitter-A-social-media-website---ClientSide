@@ -17,6 +17,8 @@ import { useTheme } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Post } from '../Post/Post';
+import { BASE_URL } from '../../UniversalData/univeralData';
+
 
 
 
@@ -51,10 +53,11 @@ function a11yProps(index) {
 }
 
 
-export const Profile = ({ name, joined, followers, following, posts }) => {
-    const { user: { username, avatar} } = useSelector(store => store)
+export const Profile = ({ name, username: usernameB, avatar, joined, followers, following, posts }) => {
+    const { user: { username } } = useSelector(store => store)
     const initialText = "Follwing"
     const [buttonText, setButtonText] = useState(initialText)
+    console.log({posts})
 
     const theme = useTheme();
     const [value, setValue] = useState(0);
@@ -70,7 +73,10 @@ export const Profile = ({ name, joined, followers, following, posts }) => {
             setRelevantData([3, "third"])
         else
             setRelevantData([4, "forth"])
+
+
     }, [value])
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -79,13 +85,22 @@ export const Profile = ({ name, joined, followers, following, posts }) => {
         setValue(index);
     };
 
-    useEffect(() => {
-        getPost()
-    }, [])
-    async function getPost() {
-        const response = await fetch(`http://localhost:7000/get-posts/${username}`)
-        const posts = await response.json()
-        setAllPosts(posts)
+    // useEffect(() => {
+    //     getPost()
+    // }, [])
+    // async function getPost() {
+    //     const response = await fetch(`${BASE_URL}/get-posts/${username}`)
+    //     const posts = await response.json()
+    //     setAllPosts(posts)
+    // }
+    async function followOrUnfollow() {
+        const url = `${BASE_URL}/follow/${username}/${usernameB}`
+        const response = await fetch(url, {
+            method: "POST"
+        })
+        const result = await response.json()
+        console.log({ result })
+        // console.log({ username, usernameB})
     }
     return (
         <div style={{ width: 664 }}>
@@ -103,18 +118,46 @@ export const Profile = ({ name, joined, followers, following, posts }) => {
                         <Box sx={{ marginTop: "-103px" }}>
                             <Avatar src={avatar} sx={{ border: "5px solid white", width: "140.5px", height: "140.5px" }} />
                         </Box>
-                        <Stack
-                            direction={"row"}
-                            spacing={1}
-                            mt={1}
-                            sx={{ minwidth: '190px', height: "42px" }}
-                        >
-                            <IconButton sx={{ border: "1px solid #dfe3e4" }}>
-                                <MoreHorizIcon />
-                            </IconButton>
-                            <IconButton sx={{ border: "1px solid #dfe3e4" }}>
-                                <NotificationsNoneIcon />
-                            </IconButton>
+                        {(username != usernameB) ?
+                            <Stack
+                                direction={"row"}
+                                spacing={1}
+                                mt={1}
+                                sx={{ minwidth: '190px', height: "42px" }}
+                            >
+                                <IconButton sx={{ border: "1px solid #dfe3e4" }}>
+                                    <MoreHorizIcon />
+                                </IconButton>
+                                <IconButton sx={{ border: "1px solid #dfe3e4" }}>
+                                    <NotificationsNoneIcon />
+                                </IconButton>
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{
+                                        bgcolor: 'white',
+                                        color: 'black',
+                                        borderRadius: "99px",
+                                        fontWeight: '600',
+                                        textTransform: 'none',
+                                        boxShadow: "none",
+                                        border: "1px solid #dfe3e4",
+                                        width: '130px',
+                                        fontSize: "16px",
+                                        '&:hover':
+                                        {
+                                            background: 'white',
+                                            color: 'red',
+                                            boxShadow: "none",
+                                            borderColor: "red"
+                                        }
+                                    }}
+                                    onMouseOver={() => setButtonText('unfollow')}
+                                    onMouseLeave={() => setButtonText(initialText)}
+                                    onClick={followOrUnfollow}
+                                >{buttonText}
+                                </Button>
+                            </Stack> :
                             <Button
                                 fullWidth
                                 variant="contained"
@@ -130,17 +173,15 @@ export const Profile = ({ name, joined, followers, following, posts }) => {
                                     fontSize: "16px",
                                     '&:hover':
                                     {
-                                        background: 'white',
-                                        color: 'red',
-                                        boxShadow: "none",
-                                        borderColor: "red"
+                                        background: '#dfe3e4',
+                                        boxShadow: "none"
                                     }
                                 }}
-                                onMouseOver={() => setButtonText('unfollow')}
-                                onMouseLeave={() => setButtonText(initialText)}
-                            >{buttonText}
+                                // onClick={editProfile}
+                            >Edit profile
                             </Button>
-                        </Stack>
+                        }
+
                     </Stack>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         <Stack
@@ -149,14 +190,14 @@ export const Profile = ({ name, joined, followers, following, posts }) => {
                             <Stack>
                                 <Typography paragraph fontSize={20} sx={{ padding: "-20px", margin: "0px", fontWeight: "bold" }}
                                 >
-                                    {name }
+                                    {name}
                                     <IconButton sx={{ paddingTop: "0px", marginTop: "-0.10px" }}>
                                         <VerifiedIcon color='primary' />
                                     </IconButton>
                                 </Typography>
                                 <Typography paragraph p={0} m={0} color='text.secondary'
                                 >
-                                    {username}
+                                    {usernameB}
                                 </Typography>
                             </Stack>
                             <Typography paragraph p={0} m={0} color='#536471'
@@ -253,7 +294,7 @@ export const Profile = ({ name, joined, followers, following, posts }) => {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
-                    {allPosts.map(post => <Post key={post._id} {...post} />)}
+                    {posts?.map(post => <Post key={post._id} {...post} />)}
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
                     <h1>No Tweets and replies</h1>
@@ -262,7 +303,7 @@ export const Profile = ({ name, joined, followers, following, posts }) => {
                     <h1>No Media</h1>
                 </TabPanel>
                 <TabPanel value={value} index={3} dir={theme.direction}>
-                    <h1>You haven't any post liked.</h1>
+                    <h1>You don't have any post liked.</h1>
                 </TabPanel>
             </Box>
         </div>
