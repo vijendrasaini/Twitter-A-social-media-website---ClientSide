@@ -7,23 +7,25 @@ import { Profile } from "../Profile/Profile"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useSelector} from 'react-redux'
 import { useEffect, useState } from "react"
 import { PortableSearchBox } from "../SearchBar/PortableSearchBox"
 
 
 export const ProfileHome = () => {
-    const { user : { username}} = useSelector(store=>store)
+    // const { user : { username}} = useSelector(store=>store)
+    const { username } = useParams()
     const navigate = useNavigate()
     const [profile, setProfile] = useState({})
     useEffect(()=>{
         getProfile()
-    },[])
+    },[username])
     async function getProfile(){
         const res1 = await fetch(`http://localhost:7000/profile/${username}`)
         const profile = await res1.json()
         setProfile(profile)
+        // console.log(profile)
     }
     return (
         <>
