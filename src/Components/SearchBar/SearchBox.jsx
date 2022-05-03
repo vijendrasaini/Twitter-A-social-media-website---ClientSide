@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, TextField } from "@mui/material"
+import { IconButton} from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
 import './searchBox.css'
 import { useRef, useState } from "react";
@@ -25,6 +25,7 @@ export const SearchBox = () => {
         <>
             <div
                 className="searchWrapper"
+                onClick={()=>dispatch(setIsSearching(true))}
             >
                 <IconButton size="large" sx={{ ml: 2 }}>
                     <SearchIcon />
