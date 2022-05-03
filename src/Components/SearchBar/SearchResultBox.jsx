@@ -1,13 +1,14 @@
-import { Box, Stack } from "@mui/material"
-import { useEffect } from "react"
-import { useSelector } from "react-redux"
+import { IconButton, Stack } from "@mui/material"
+import { useDispatch, useSelector } from "react-redux"
 import { FollowCard } from "../Cards/FollowCard"
+import CancelIcon from '@mui/icons-material/Cancel';
+import { setIsSearching } from "../../Redux/actionCreators";
 
 
 
 export const SearchResultBox = ()=>{
-
-    const { searchArr } = useSelector(store=>store)
+    const dispatch = useDispatch()
+    const { searchArr, isSearching } = useSelector(store=>store)
     return (
         <Stack
         sx={{   width : 430,
@@ -24,10 +25,18 @@ export const SearchResultBox = ()=>{
             }}
         >
             
+            {isSearching && <span 
+            onClick={()=>{dispatch(setIsSearching(false))
+            console.log("wanna cancel")}}
+            style={{float : "left"}}>
+                    <IconButton sx={{color : "red"}}>
+                        <CancelIcon/>
+                    </IconButton>
+                </span>}
             {!searchArr.length ?
-                <h3 style={{textAlign : "center"}}>No Results Found</h3>
+                <h3 style={{textAlign : "center", paddingTop : 0, marginTop : -33}}>No Results Found</h3>
                 :
-                <h3 style={{textAlign : "center"}}>Your Search Results</h3>
+                <h3 style={{textAlign : "center", paddingTop : 0, marginTop : -33}}>Your Search Results</h3>
             }
             {searchArr.map( user => <FollowCard key={user._id} {...user}/>)}
         </Stack>
