@@ -7,7 +7,7 @@ import { WhotoFollow } from "../WhotoFollow"
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-import { ImportableSearchBox } from "../SearchBar/ImportableSearchBox"
+import {PortableSearchBox } from "../SearchBar/PortableSearchBox"
 
 
 export const Home = () => {
@@ -43,7 +43,7 @@ export const Home = () => {
                                     <StarHalfIcon />
                                 </IconButton>
                             </Stack>
-                            <ImportableSearchBox/>
+                            <PortableSearchBox/>
                         </Stack>
                         <Stack direction={"row"} spacing={4} 
                         sx={{marginTop:"65px"}}
