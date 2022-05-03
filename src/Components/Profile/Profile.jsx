@@ -55,10 +55,8 @@ function a11yProps(index) {
 
 export const Profile = ({ name, username: usernameB, avatar, joined, followers, following, posts }) => {
     const { user: { username } } = useSelector(store => store)
-    console.log({avatar})
     const initialText = "Follwing"
     const [buttonText, setButtonText] = useState(initialText)
-    console.log({posts})
 
     const theme = useTheme();
     const [value, setValue] = useState(0);
