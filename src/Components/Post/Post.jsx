@@ -46,7 +46,7 @@ function timeSince(timeStamp) {
       return day + " " + month + year;
     }
   }
-export const Post = ({title, avatar,image,name,username,createdAt, likes}) => {
+export const Post = ({title, avatar,image,name,username,createdAt, likes, _id}) => {
     const [expanded, setExpanded] = useState(false)
 
     const handleExpandClick = () =>setExpanded(!expanded)
@@ -59,7 +59,9 @@ export const Post = ({title, avatar,image,name,username,createdAt, likes}) => {
             '&:hover': {
                 background: "#F6F8F8"
             }
-        }}>
+        }}
+        key={_id}
+        >
             <Stack
                 direction='row'
                 
