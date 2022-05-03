@@ -1,0 +1,15 @@
+.galleryPost{
+    width: 22px;
+    height: 22px;
+    margin-top: 12px;
+}
+.galleryPost:hover {
+    cursor: pointer;
+}
+.preview-container{
+    width: 640px;
+    margin-top: 10px;
+}
+.preview{
+    width: 640px;
+}
