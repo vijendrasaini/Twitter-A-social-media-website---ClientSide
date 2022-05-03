@@ -92,7 +92,7 @@ export const Post = ({title, avatar,image,name,username,createdAt, likes, _id}) 
                                 >
                                     <Typography paragraph
                                         sx={{ fontWeight: "bold" }}
-                                    >{name || "Elon Musk"}
+                                    >{name}
                                     <IconButton sx={{padding : 0}} >
                                             <VerifiedIcon color='primary' sx={{fontSize : "22px"}}/>
                                         </IconButton>
@@ -105,7 +105,7 @@ export const Post = ({title, avatar,image,name,username,createdAt, likes, _id}) 
                                         color='text.secondary'
                                         ml={-0.8}
                                     >
-                                        {username || "@elonmusk"}
+                                        {username}
                                     </Typography>
                                 </Grid>
                                 <Grid item sx={{ width: "auto" }}
