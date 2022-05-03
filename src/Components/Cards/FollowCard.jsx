@@ -4,7 +4,7 @@ import { Link} from 'react-router-dom'
 
 export const FollowCard = ({username, name, avatar}) => {
     
-
+    console.log({username})
     return (
         <Link to={`/${username}`} style={{ color : 'black', textDecoration : "none"}}>
             <CardHeader
