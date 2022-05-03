@@ -2,12 +2,13 @@ import { Box, IconButton, Stack, TextField } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
 import './searchBox.css'
 import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { performSearch, setIsSearching } from "../../Redux/actionCreators";
 
 export const SearchBox = () => {
 
     const [searchText,setSearchText] = useState("")
+    const { isSearching} = useSelector(store=>store)
     const dispatch = useDispatch()
     const id = useRef(null)
     function debounce(){
@@ -24,7 +25,6 @@ export const SearchBox = () => {
         <>
             <div
                 className="searchWrapper"
-                onClick={()=>dispatch(setIsSearching(true))}
             >
                 <IconButton size="large" sx={{ ml: 2 }}>
                     <SearchIcon />
@@ -37,7 +37,6 @@ export const SearchBox = () => {
                         debounce()
                     }}
                     value={searchText}
-                    onBlur={()=>dispatch(setIsSearching(false))}
                     placeholder="Search Twitter" />
             </div>
         </>
