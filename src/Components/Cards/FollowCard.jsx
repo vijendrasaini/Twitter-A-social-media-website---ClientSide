@@ -6,7 +6,7 @@ export const FollowCard = ({username, name, avatar}) => {
     
 
     return (
-        <Link to={"/"} style={{ color : 'black', textDecoration : "none"}}>
+        <Link to={`/${username}`} style={{ color : 'black', textDecoration : "none"}}>
             <CardHeader
                 sx={{ '&:hover': { background: '#F2F2F2' }, height: "50px" }}
                 avatar={
