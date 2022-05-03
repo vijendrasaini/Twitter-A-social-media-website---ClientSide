@@ -5,16 +5,15 @@ import { PostingDashbord } from "../PostingDashbord/PostingDashbord"
 import { Privacy } from "../Privacy"
 import { WhotoFollow } from "../WhotoFollow"
 import StarHalfIcon from '@mui/icons-material/StarHalf';
-import { SearchBox } from "../SearchBox/SearchBox"
-import { SearchResultBox } from "../SearchBox/SearchResultBox"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+import { ImportableSearchBox } from "../SearchBar/ImportableSearchBox"
 
 
 export const Home = () => {
 
     const [interestedPosts, setInterestedPosts] = useState([])
-    const { user : { username}, isSearching} = useSelector(store => store)
+    const { user : { username}} = useSelector(store => store)
     useEffect(()=>{
         getInterestedPost()
     },[])
@@ -44,11 +43,7 @@ export const Home = () => {
                                     <StarHalfIcon />
                                 </IconButton>
                             </Stack>
-                            <Box>
-                                <SearchBox/>
-                                { isSearching && <SearchResultBox/>}
-                                
-                            </Box>
+                            <ImportableSearchBox/>
                         </Stack>
                         <Stack direction={"row"} spacing={4} 
                         sx={{marginTop:"65px"}}
