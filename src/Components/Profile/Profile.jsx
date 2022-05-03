@@ -55,6 +55,7 @@ function a11yProps(index) {
 
 export const Profile = ({ name, username: usernameB, avatar, joined, followers, following, posts }) => {
     const { user: { username } } = useSelector(store => store)
+    console.log({avatar})
     const initialText = "Follwing"
     const [buttonText, setButtonText] = useState(initialText)
     console.log({posts})
@@ -294,6 +295,9 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
+                    {posts?.length == 0 && 
+                    <h1>Start Posting tweets on twitter world.</h1>
+                    }
                     {posts?.map(post => <Post key={post._id} {...post} />)}
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
