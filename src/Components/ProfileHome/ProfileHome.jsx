@@ -10,7 +10,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import { useNavigate } from "react-router-dom"
 import { useSelector} from 'react-redux'
 import { useEffect, useState } from "react"
-import { SearchBox } from "../SearchBox/SearchBox"
+import { PortableSearchBox } from "../SearchBar/PortableSearchBox"
 
 
 export const ProfileHome = () => {
@@ -63,9 +63,7 @@ export const ProfileHome = () => {
                                     </Stack>
                                 </Stack>
                             </Box>
-                            <Box>
-                                <SearchBox/>
-                            </Box>
+                            <PortableSearchBox/>
                         </Stack>
                         <Stack direction={"row"} spacing={4} sx={{ marginTop: "65px" }}>
                             <Profile {...profile} />
