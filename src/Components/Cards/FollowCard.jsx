@@ -1,16 +1,19 @@
 import { Avatar, CardHeader, Typography } from "@mui/material"
+import { useDispatch } from "react-redux"
 import { Link, useNavigate} from 'react-router-dom'
+import { setIsSearching } from "../../Redux/actionCreators"
 
 
 export const FollowCard = ({username, name, avatar}) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     return (
-        <Link
-            to={`/${username}`} 
-            style={{ color : 'black', textDecoration : "none"}}
-            >
             <CardHeader
-                sx={{ '&:hover': { background: '#F2F2F2' }, height: "50px" ,cursor : "poiner",}}
+                onClick={()=>{
+                    dispatch(setIsSearching(false))
+                    navigate(`/${username}`)
+                }}
+                sx={{ '&:hover': { background: '#F2F2F2',cursor : "pointer" }, height: "50px" ,}}
                 avatar={
                     <Avatar sx={{  width: "56px", height: "56px" }} aria-label="recipe" src={avatar} />
                 }
@@ -22,6 +25,5 @@ export const FollowCard = ({username, name, avatar}) => {
                 >{username}
                 </Typography>}
             />
-        </Link>
     )
 }
