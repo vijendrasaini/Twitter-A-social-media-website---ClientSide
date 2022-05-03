@@ -41,7 +41,7 @@ export const iconsArr = [
     {
         title : "Profile",
         Icon : PermIdentityIcon,
-        link : `/${JSON.parse(localStorage.getItem('user')).username}`
+        link : `/${JSON.parse(localStorage.getItem('user'))?.username}`
     },
     {
         title : "More",
