@@ -39,7 +39,7 @@ export const PostingDashbord = () => {
         }
     }
     const postATweet = async () => {
-        const body = {username, name}
+        const body = {username, name, avatar}
         if(tweetText!= "")
             body.title = tweetText
         if(previewSource)
