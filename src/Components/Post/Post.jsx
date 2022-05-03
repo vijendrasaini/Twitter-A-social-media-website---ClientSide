@@ -46,7 +46,7 @@ function timeSince(timeStamp) {
       return day + " " + month + year;
     }
   }
-export const Post = ({title, image,name,username,createdAt, likes}) => {
+export const Post = ({title, avatar,image,name,username,createdAt, likes}) => {
     const [expanded, setExpanded] = useState(false)
 
     const handleExpandClick = () =>setExpanded(!expanded)
@@ -69,7 +69,7 @@ export const Post = ({title, image,name,username,createdAt, likes}) => {
                     <Box
                         padding="10px"
                     >
-                        <Avatar sx={{ width: 56, height: 56 }} src='https://pbs.twimg.com/profile_images/1516941307406856192/P3ACOLXv_400x400.jpg' />
+                        <Avatar sx={{ width: 56, height: 56 }} src={avatar} />
                     </Box>
                 </Stack>
                 <Stack
