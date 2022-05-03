@@ -46,15 +46,11 @@ export const Home = () => {
                             </Stack>
                             <Box>
                                 <SearchBox/>
-                                { 
-                                
-                                isSearching && <SearchResultBox/>
-                                }
+                                { isSearching && <SearchResultBox/>}
                                 
                             </Box>
                         </Stack>
                         <Stack direction={"row"} spacing={4} 
-                        // border={"1px solid teal"}
                         sx={{marginTop:"65px"}}
                         >
                             <Box spacing={0} >
