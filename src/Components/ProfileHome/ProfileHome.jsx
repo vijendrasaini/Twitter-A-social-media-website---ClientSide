@@ -14,7 +14,6 @@ import { PortableSearchBox } from "../SearchBar/PortableSearchBox"
 
 
 export const ProfileHome = () => {
-    // const { user : { username}} = useSelector(store=>store)
     const { username } = useParams()
     const navigate = useNavigate()
     const [profile, setProfile] = useState({})
@@ -25,7 +24,6 @@ export const ProfileHome = () => {
         const res1 = await fetch(`http://localhost:7000/profile/${username}`)
         const profile = await res1.json()
         setProfile(profile)
-        // console.log(profile)
     }
     return (
         <>
