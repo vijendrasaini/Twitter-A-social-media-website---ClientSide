@@ -1,4 +1,4 @@
-import {ISFOLLOWING, ISSEARCHING, SETSEARCHRESULT, SETUSER} from './actions'
+import {FOLLOWING_STATUS, ISSEARCHING, SETSEARCHRESULT, SETUSER} from './actions'
 
 
 
@@ -16,7 +16,7 @@ export const reducer = (state = initState, { type, payload})=>{
             return { ...state, isSearching : payload }
         case SETSEARCHRESULT:
             return { ...state, searchArr : payload}
-        case ISFOLLOWING:
+        case FOLLOWING_STATUS:
             return { ...state, followingStatus : payload}
         default : 
             return state
