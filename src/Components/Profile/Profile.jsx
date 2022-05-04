@@ -11,13 +11,14 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Post } from '../Post/Post';
 import { BASE_URL } from '../../UniversalData/univeralData';
+import { toggleFollowingStatus } from '../../Redux/actionCreators';
 
 
 
@@ -53,19 +54,21 @@ function a11yProps(index) {
 }
 function normalCase(string) {
     let arr = string.split(" ")
-    let newArr = arr.map(name=>name[0].toUpperCase() + name.slice(1).toLowerCase())
+    let newArr = arr.map(name => name[0].toUpperCase() + name.slice(1).toLowerCase())
     return newArr.join(" ")
 }
 
 export const Profile = ({ name, username: usernameB, avatar, joined, followers, following, posts, status }) => {
-    const { user: { username } } = useSelector(store => store)
+
     const initialText = "Follwing"
     const [buttonText, setButtonText] = useState(initialText)
-    const [fStatus, setFstatus] = useState(status)
-    const theme = useTheme();
     const [value, setValue] = useState(0);
     const [relevantData, setRelevantData] = useState([]);
     const [allPosts, setAllPosts] = useState([])
+
+    const { user: { username }, followingStatus } = useSelector(store => store)
+    const dispatch = useDispatch()
+    const theme = useTheme();
 
     // async function followOrUnfollow() {
     //     const url = `${BASE_URL}/follow/${username}/${usernameB}`
@@ -76,25 +79,30 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
     //     console.log({ result })
     // }
 
-    async function startFollowing(){
-        console.log("just statred")
+    async function startFollowing() {
+        // console.log("just statred")
         const url = `${BASE_URL}/follow/${username}/${usernameB}`
-        const response = await fetch(url,{
-            method : "POST"
+        const response = await fetch(url, {
+            method: "POST"
         })
         const res = await response.json()
-        console.log(res)
-        setFstatus(1)
+        dispatch(toggleFollowingStatus({
+            follow : true,
+            followers : followingStatus.followers + 1
+        }))
+        // console.log({followingStatus})
     }
-    async function doUnfollow(){
-        console.log("just statred")
+    async function doUnfollow() {
+        // console.log("just statred")
         const url = `${BASE_URL}/follow/${username}/${usernameB}`
-        const response = await fetch(url,{
-            method : "DELETE"
+        const response = await fetch(url, {
+            method: "DELETE"
         })
         const res = await response.json()
-        console.log(res)
-        setFstatus(1)
+        dispatch(toggleFollowingStatus({
+            follow : false,
+            followers : followingStatus.followers - 1
+        }))
     }
     useEffect(() => {
         if (value == 0)
@@ -116,7 +124,7 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
     const handleChangeIndex = (index) => {
         setValue(index);
     };
-    
+
     return (
         <div style={{ width: 664 }}>
             <Box style={{ width: 664, maxHight: "300px", boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 2px 0px' }} spacing={4} >
@@ -144,7 +152,7 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                                     <MoreHorizIcon />
                                 </IconButton>
                                 {
-                                    status ?
+                                    followingStatus.follow ?
                                         <>
                                             <IconButton sx={{ border: "1px solid #dfe3e4" }}>
                                                 <NotificationsNoneIcon />
@@ -175,7 +183,8 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                                                 onClick={doUnfollow}
                                             >{buttonText}
                                             </Button>
-                                        </> :
+                                        </>
+                                        :
                                         <Button
                                             onClick={startFollowing}
                                             fullWidth
@@ -265,7 +274,7 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                                 </Typography>
                                 <Typography paragraph p={0} m={0} sx={{ fontSize: 16, fontWeight: "bolder", marginRight: 1, marginLeft: 2 }}
                                 >
-                                    {followers}
+                                    {username == usernameB ? followers : followingStatus?.followers}
                                 </Typography>
                                 <Typography paragraph p={0} m={0} component="p" sx={{ color: '#536471', fontSize: 16, letterSpacing: 0.5 }}
                                 >
@@ -338,8 +347,8 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
-                    {posts?.length == 0 && 
-                    (username == usernameB?<h1>Start Posting tweets on twitter world.</h1> : <h1>No posts from {normalCase(name)}</h1>)
+                    {posts?.length == 0 &&
+                        (username == usernameB ? <h1>Start Posting tweets on twitter world.</h1> : <h1>No posts from {normalCase(name)}</h1>)
                     }
                     {posts?.map(post => <Post key={post._id} {...post} />)}
                 </TabPanel>

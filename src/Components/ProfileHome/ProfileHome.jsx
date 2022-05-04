@@ -8,26 +8,41 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
 import { useNavigate, useParams } from "react-router-dom"
-import { useSelector} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import { useEffect, useState } from "react"
 import { PortableSearchBox } from "../SearchBar/PortableSearchBox"
 import { BASE_URL } from "../../UniversalData/univeralData"
+import { toggleFollowingStatus } from "../../Redux/actionCreators"
 
 
 export const ProfileHome = () => {
+    
+    const [profile, setProfile] = useState({})
+    // const [fs, setFs] = useState(null)
+    
     const { username : usernameB } = useParams()
     const navigate = useNavigate()
-    const [profile, setProfile] = useState({})
-    const { user : { username}} = useSelector(store => store)
+    const dispatch = useDispatch()
+    const { user : { username}, followingStatus} = useSelector(store => store)
+    
     useEffect(()=>{
         getProfile()
     },[usernameB])
     async function getProfile(){
         const res1 = await fetch(`${BASE_URL}/profile/${username}/${usernameB}`)
         const profile = await res1.json()
-        console.log(profile)
+        // console.log(profile)
         setProfile(profile)
+        // setFs(profile.status)
+        dispatch(toggleFollowingStatus({
+            follow : profile.status? true : false,
+            followers : profile.followers
+        }))
+        // console.log({followingStatus})
     }
+    useEffect(()=>{
+        
+    },[followingStatus])
     return (
         <>
             <Grid
