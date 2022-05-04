@@ -54,7 +54,8 @@ export const Home = () => {
                                     { !interestedPosts.length || !Array.isArray(interestedPosts) ? 
                                         <Box pt={5}>
                                             <h2>No posts , Follow people on twitter to see what's happening around the world</h2>
-                                        </Box> : interestedPosts.map(post=><Post key={post._id} {...post} />)
+                                        </Box> : 
+                                        interestedPosts.map(post=><Post key={post._id} {...post} />)
                                     }
                                 </Box>
                             </Box>
