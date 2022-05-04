@@ -10,12 +10,16 @@ import { useState } from 'react';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { Box, Grid, Stack } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import { BASE_URL } from '../../UniversalData/univeralData';
+import axios from 'axios'
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -49,10 +53,28 @@ function timeSince(timeStamp, date) {
     }
 }
 export const Post = ({ title, avatar, image, name, username, createdAt, likes, _id }) => {
+
     const [expanded, setExpanded] = useState(false)
 
-    const handleExpandClick = () => setExpanded(!expanded)
+    const { user: { username: self } } = useSelector(store => store)
 
+    const [isLiked, setIsLiked] = useState(likes.includes(self) ? true : false)
+    const [countLikes, setCountLikes ] = useState(likes.length)
+
+    async function handleLike(){
+        try {
+            const url = `${BASE_URL}/create-post/${self}/${_id}`
+            const response = await axios.post(url)
+            if(response.data.status == 'success'){
+                setIsLiked(!isLiked)
+                setCountLikes(isLiked ? countLikes - 1 : countLikes + 1)
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    const handleExpandClick = () => setExpanded(!expanded)
     return (
         <Card sx={{
             width: 664,
@@ -165,10 +187,15 @@ export const Post = ({ title, avatar, image, name, username, createdAt, likes, _
                             spacing={0.7}
                         >
 
-                            <IconButton aria-label="share">
-                                <FavoriteBorderIcon />
-                            </IconButton>
-                            <Typography paragraph sx={{ padding: "8px 10px 0px 0px" }}>{likes}</Typography>
+                            <span onClick={()=> handleLike()}>
+                                <IconButton aria-label="share">
+                                    {
+                                        isLiked ? <FavoriteIcon sx={{color : "red"}}/> : <FavoriteBorderIcon/>
+                                    }
+                                    
+                                </IconButton>
+                            </span>
+                            <Typography paragraph sx={{ padding: "8px 10px 0px 0px" }}>{countLikes}</Typography>
 
                         </Stack>
                         <Stack
