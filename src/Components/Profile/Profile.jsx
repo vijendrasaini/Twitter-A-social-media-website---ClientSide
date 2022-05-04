@@ -51,7 +51,11 @@ function a11yProps(index) {
         'aria-controls': `action-tabpanel-${index}`,
     };
 }
-
+function normalCase(string) {
+    let arr = string.split(" ")
+    let newArr = arr.map(name=>name[0].toUpperCase() + name.slice(1).toLowerCase())
+    return newArr.join(" ")
+}
 
 export const Profile = ({ name, username: usernameB, avatar, joined, followers, following, posts, status }) => {
     const { user: { username } } = useSelector(store => store)
@@ -334,8 +338,8 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
-                    {posts?.length == 0 &&
-                        <h1>Start Posting tweets on twitter world.</h1>
+                    {posts?.length == 0 && 
+                    (username == usernameB?<h1>Start Posting tweets on twitter world.</h1> : <h1>No posts from {normalCase(name)}</h1>)
                     }
                     {posts?.map(post => <Post key={post._id} {...post} />)}
                 </TabPanel>
