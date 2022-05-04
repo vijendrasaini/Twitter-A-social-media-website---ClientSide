@@ -6,7 +6,10 @@ const initState = {
     user : JSON.parse(localStorage.getItem('user')),
     searchArr : [],
     isSearching : false,
-    followingStatus : false,
+    followingStatus : {
+        follow : false,
+        followers : 0
+    },
 }
 export const reducer = (state = initState, { type, payload})=>{
     switch(type){
