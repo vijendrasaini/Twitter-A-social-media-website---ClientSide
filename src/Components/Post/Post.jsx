@@ -27,7 +27,8 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-function timeSince(timeStamp) {
+function timeSince(timeStamp,date) {
+    date = new Date(date)
     var now = new Date(),
       secondsPast = (now.getTime() - timeStamp) / 1000;
     if (secondsPast < 60) {
@@ -40,9 +41,9 @@ function timeSince(timeStamp) {
       return parseInt(secondsPast / 3600) + 'h';
     }
     if (secondsPast > 86400) {
-      day = timeStamp.getDate();
-      month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ", "");
-      year = timeStamp.getFullYear() == now.getFullYear() ? "" : " " + timeStamp.getFullYear();
+      let day = date.getDate();
+      let month = date.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ", "");
+      let year = date.getFullYear() == now.getFullYear() ? "" : " " + date.getFullYear();
       return day + " " + month + year;
     }
   }
@@ -92,26 +93,26 @@ export const Post = ({title, avatar,image,name,username,createdAt, likes, _id}) 
                                 >
                                     <Typography paragraph
                                         sx={{ fontWeight: "bold" }}
-                                    >{name}
+                                    >
+                                        <span>{name}</span>
                                     <IconButton sx={{padding : 0}} >
                                             <VerifiedIcon color='primary' sx={{fontSize : "22px"}}/>
                                         </IconButton>
                                     </Typography>
                                 </Grid>
-                                <Grid item sx={{ width: "auto" }}
-                                >
+                                <Grid item sx={{ width: "auto" }}>
                                     <Typography
                                         paragraph
                                         color='text.secondary'
                                         ml={-0.8}
                                     >
-                                        {username}
+                                        <span>{username}</span>
                                     </Typography>
                                 </Grid>
                                 <Grid item sx={{ width: "auto" }}
                                 >
                                     <Typography paragraph>
-                                        . {timeSince(new Date(createdAt).getTime())}
+                                        . {timeSince(new Date(createdAt).getTime(), createdAt)}
                                     </Typography>
                                 </Grid>
                             </Stack>
