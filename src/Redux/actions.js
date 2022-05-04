@@ -1,3 +1,4 @@
 export const SETUSER = "SETUSER"
 export const SETSEARCHRESULT = "SETSEARCHRESULT"
 export const ISSEARCHING = "ISSEARCHING"
+export const ISFOLLOWING = "ISFOLLOWING"
