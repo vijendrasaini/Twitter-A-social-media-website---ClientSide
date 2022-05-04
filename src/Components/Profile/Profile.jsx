@@ -53,16 +53,45 @@ function a11yProps(index) {
 }
 
 
-export const Profile = ({ name, username: usernameB, avatar, joined, followers, following, posts }) => {
+export const Profile = ({ name, username: usernameB, avatar, joined, followers, following, posts, status }) => {
     const { user: { username } } = useSelector(store => store)
     const initialText = "Follwing"
     const [buttonText, setButtonText] = useState(initialText)
-
+    const [fStatus, setFstatus] = useState(status)
     const theme = useTheme();
     const [value, setValue] = useState(0);
     const [relevantData, setRelevantData] = useState([]);
     const [allPosts, setAllPosts] = useState([])
 
+    // async function followOrUnfollow() {
+    //     const url = `${BASE_URL}/follow/${username}/${usernameB}`
+    //     const response = await fetch(url, {
+    //         method: "POST"
+    //     })
+    //     const result = await response.json()
+    //     console.log({ result })
+    // }
+
+    async function startFollowing(){
+        console.log("just statred")
+        const url = `${BASE_URL}/follow/${username}/${usernameB}`
+        const response = await fetch(url,{
+            method : "POST"
+        })
+        const res = await response.json()
+        console.log(res)
+        setFstatus(1)
+    }
+    async function doUnfollow(){
+        console.log("just statred")
+        const url = `${BASE_URL}/follow/${username}/${usernameB}`
+        const response = await fetch(url,{
+            method : "DELETE"
+        })
+        const res = await response.json()
+        console.log(res)
+        setFstatus(1)
+    }
     useEffect(() => {
         if (value == 0)
             setRelevantData([1, "first"])
@@ -83,24 +112,7 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
     const handleChangeIndex = (index) => {
         setValue(index);
     };
-
-    // useEffect(() => {
-    //     getPost()
-    // }, [])
-    // async function getPost() {
-    //     const response = await fetch(`${BASE_URL}/get-posts/${username}`)
-    //     const posts = await response.json()
-    //     setAllPosts(posts)
-    // }
-    async function followOrUnfollow() {
-        const url = `${BASE_URL}/follow/${username}/${usernameB}`
-        const response = await fetch(url, {
-            method: "POST"
-        })
-        const result = await response.json()
-        console.log({ result })
-        // console.log({ username, usernameB})
-    }
+    
     return (
         <div style={{ width: 664 }}>
             <Box style={{ width: 664, maxHight: "300px", boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 2px 0px' }} spacing={4} >
@@ -127,35 +139,64 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                                 <IconButton sx={{ border: "1px solid #dfe3e4" }}>
                                     <MoreHorizIcon />
                                 </IconButton>
-                                <IconButton sx={{ border: "1px solid #dfe3e4" }}>
-                                    <NotificationsNoneIcon />
-                                </IconButton>
-                                <Button
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{
-                                        bgcolor: 'white',
-                                        color: 'black',
-                                        borderRadius: "99px",
-                                        fontWeight: '600',
-                                        textTransform: 'none',
-                                        boxShadow: "none",
-                                        border: "1px solid #dfe3e4",
-                                        width: '130px',
-                                        fontSize: "16px",
-                                        '&:hover':
-                                        {
-                                            background: 'white',
-                                            color: 'red',
-                                            boxShadow: "none",
-                                            borderColor: "red"
-                                        }
-                                    }}
-                                    onMouseOver={() => setButtonText('unfollow')}
-                                    onMouseLeave={() => setButtonText(initialText)}
-                                    onClick={followOrUnfollow}
-                                >{buttonText}
-                                </Button>
+                                {
+                                    status ?
+                                        <>
+                                            <IconButton sx={{ border: "1px solid #dfe3e4" }}>
+                                                <NotificationsNoneIcon />
+                                            </IconButton>
+                                            <Button
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{
+                                                    bgcolor: 'white',
+                                                    color: 'black',
+                                                    borderRadius: "99px",
+                                                    fontWeight: '600',
+                                                    textTransform: 'none',
+                                                    boxShadow: "none",
+                                                    border: "1px solid #dfe3e4",
+                                                    width: '130px',
+                                                    fontSize: "16px",
+                                                    '&:hover':
+                                                    {
+                                                        background: 'white',
+                                                        color: 'red',
+                                                        boxShadow: "none",
+                                                        borderColor: "red"
+                                                    }
+                                                }}
+                                                onMouseOver={() => setButtonText('unfollow')}
+                                                onMouseLeave={() => setButtonText(initialText)}
+                                                onClick={doUnfollow}
+                                            >{buttonText}
+                                            </Button>
+                                        </> :
+                                        <Button
+                                            onClick={startFollowing}
+                                            fullWidth
+                                            variant="contained"
+                                            sx={{
+                                                mt: 2,
+                                                mb: 2,
+                                                borderRadius: "99px",
+                                                boxShadow: "0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25)",
+                                                fontSize: "16px",
+                                                fontWeight: '600',
+                                                textTransform: 'none',
+                                                background: 'black',
+                                                color: 'white',
+                                                paddingY: "9px",
+                                                '&:hover': {
+                                                    color: 'white',
+                                                    background: '#171717'
+                                                }
+                                            }}
+                                        >
+                                            Follow
+                                        </Button>
+                                }
+
                             </Stack> :
                             <Button
                                 fullWidth
@@ -176,7 +217,7 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                                         boxShadow: "none"
                                     }
                                 }}
-                                // onClick={editProfile}
+                            // onClick={editProfile}
                             >Edit profile
                             </Button>
                         }
@@ -293,8 +334,8 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
-                    {posts?.length == 0 && 
-                    <h1>Start Posting tweets on twitter world.</h1>
+                    {posts?.length == 0 &&
+                        <h1>Start Posting tweets on twitter world.</h1>
                     }
                     {posts?.map(post => <Post key={post._id} {...post} />)}
                 </TabPanel>

@@ -11,18 +11,21 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useSelector} from 'react-redux'
 import { useEffect, useState } from "react"
 import { PortableSearchBox } from "../SearchBar/PortableSearchBox"
+import { BASE_URL } from "../../UniversalData/univeralData"
 
 
 export const ProfileHome = () => {
-    const { username } = useParams()
+    const { username : usernameB } = useParams()
     const navigate = useNavigate()
     const [profile, setProfile] = useState({})
+    const { user : { username}} = useSelector(store => store)
     useEffect(()=>{
         getProfile()
-    },[username])
+    },[usernameB])
     async function getProfile(){
-        const res1 = await fetch(`http://localhost:7000/profile/${username}`)
+        const res1 = await fetch(`${BASE_URL}/profile/${username}/${usernameB}`)
         const profile = await res1.json()
+        console.log(profile)
         setProfile(profile)
     }
     return (
