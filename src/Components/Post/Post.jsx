@@ -15,6 +15,7 @@ import { Box, Grid, Stack } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
+import { Link } from 'react-router-dom'
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -27,52 +28,54 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-function timeSince(timeStamp,date) {
+function timeSince(timeStamp, date) {
     date = new Date(date)
     var now = new Date(),
-      secondsPast = (now.getTime() - timeStamp) / 1000;
+        secondsPast = (now.getTime() - timeStamp) / 1000;
     if (secondsPast < 60) {
-      return parseInt(secondsPast) + 's';
+        return parseInt(secondsPast) + 's';
     }
     if (secondsPast < 3600) {
-      return parseInt(secondsPast / 60) + 'm';
+        return parseInt(secondsPast / 60) + 'm';
     }
     if (secondsPast <= 86400) {
-      return parseInt(secondsPast / 3600) + 'h';
+        return parseInt(secondsPast / 3600) + 'h';
     }
     if (secondsPast > 86400) {
-      let day = date.getDate();
-      let month = date.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ", "");
-      let year = date.getFullYear() == now.getFullYear() ? "" : " " + date.getFullYear();
-      return day + " " + month + year;
+        let day = date.getDate();
+        let month = date.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ", "");
+        let year = date.getFullYear() == now.getFullYear() ? "" : " " + date.getFullYear();
+        return day + " " + month + year;
     }
-  }
-export const Post = ({title, avatar,image,name,username,createdAt, likes, _id}) => {
+}
+export const Post = ({ title, avatar, image, name, username, createdAt, likes, _id }) => {
     const [expanded, setExpanded] = useState(false)
 
-    const handleExpandClick = () =>setExpanded(!expanded)
+    const handleExpandClick = () => setExpanded(!expanded)
 
     return (
         <Card sx={{
             width: 664,
-            border : "1px solid #F2F2F2",
-            boxShadow : "none",
+            border: "1px solid #F2F2F2",
+            boxShadow: "none",
             '&:hover': {
                 background: "#F6F8F8"
             }
         }}
-        key={_id}
+            key={_id}
         >
             <Stack
                 direction='row'
-                
-                sx ={{padding: "12px 7px 5px 7px"}}
+
+                sx={{ padding: "12px 7px 5px 7px" }}
             >
                 <Stack>
                     <Box
                         padding="10px"
                     >
-                        <Avatar sx={{ width: 56, height: 56 }} src={avatar} />
+                        <Link style={{ textDecoration: "none", color: "black" }} to={`/${username}`}>
+                            <Avatar sx={{ width: 56, height: 56 }} src={avatar} />
+                        </Link>
                     </Box>
                 </Stack>
                 <Stack
@@ -94,9 +97,9 @@ export const Post = ({title, avatar,image,name,username,createdAt, likes, _id}) 
                                     <Typography paragraph
                                         sx={{ fontWeight: "bold" }}
                                     >
-                                        <span>{name}</span>
-                                    <IconButton sx={{padding : 0}} >
-                                            <VerifiedIcon color='primary' sx={{fontSize : "22px"}}/>
+                                        <Link style={{ textDecoration: "none", color: "black" }} to={`/${username}`}>{name}</Link>
+                                        <IconButton sx={{ padding: 0 }} >
+                                            <VerifiedIcon color='primary' sx={{ fontSize: "22px" }} />
                                         </IconButton>
                                     </Typography>
                                 </Grid>
@@ -106,7 +109,7 @@ export const Post = ({title, avatar,image,name,username,createdAt, likes, _id}) 
                                         color='text.secondary'
                                         ml={-0.8}
                                     >
-                                        <span>{username}</span>
+                                        <Link style={{ textDecoration: "none", color: "black" }} to={`/${username}`}>{username}</Link>
                                     </Typography>
                                 </Grid>
                                 <Grid item sx={{ width: "auto" }}
@@ -128,11 +131,11 @@ export const Post = ({title, avatar,image,name,username,createdAt, likes, _id}) 
                     </CardContent>
                     {image && (
                         <CardMedia
-                        component="img"
-                        image={image}
-                        alt="Paella dish"
-                        sx={{borderRadius:6, border :"1px solid #F2F2F2"}}
-                    />
+                            component="img"
+                            image={image}
+                            alt={name + " profile image"}
+                            sx={{ borderRadius: 6, border: "1px solid #F2F2F2" }}
+                        />
                     )}
                     <Stack
                         direction="row"
