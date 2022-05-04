@@ -1,10 +1,10 @@
-import { ISFOLLOWING, ISSEARCHING, SETSEARCHRESULT, SETUSER} from './actions'
+import { FOLLOWING_STATUS, ISSEARCHING, SETSEARCHRESULT, SETUSER} from './actions'
 
 
 export const setUser = (payload)=>({ type : SETUSER , payload})
 export const setSearchResult = (payload)=>({type : SETSEARCHRESULT, payload})
 export const setIsSearching = (payload)=>({type : ISSEARCHING, payload})
-export const setIsFollowing = (payload) => ({ type : ISFOLLOWING, payload})
+export const toggleFollowingStatus = (payload) => ({ type : FOLLOWING_STATUS, payload})
 
 export const performSearch = (searchText)=> async (dispatch)=>{
     const url = `http://localhost:7000/search?search=${searchText}`
