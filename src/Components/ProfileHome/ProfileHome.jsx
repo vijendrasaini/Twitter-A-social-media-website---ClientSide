@@ -31,8 +31,8 @@ export const ProfileHome = () => {
     async function getProfile(){
         const res1 = await fetch(`${BASE_URL}/profile/${username}/${usernameB}`)
         const profile = await res1.json()
-        // console.log(profile)
         setProfile(profile)
+        // console.log(profile)
         // setFs(profile.status)
         dispatch(toggleFollowingStatus({
             follow : profile.status? true : false,
