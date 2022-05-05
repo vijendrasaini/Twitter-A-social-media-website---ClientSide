@@ -4,7 +4,8 @@ import {Box, Button, Link, Grid } from "@mui/material"
 export const Privacy = () => {
 
     return (
-            <Box
+            <Box p={2}>
+                <Box
                 width={348}
             >
                 <Grid
@@ -17,25 +18,9 @@ export const Privacy = () => {
                     <Link href='#' component={"span"} mx={1} underline="hover" variant="body2" color={"inherit"}>Ads info</Link>
                     <Link href='#' component={"span"} mx={1} underline="hover" variant="body2" color={"inherit"}>More...</Link><br />
                     <Link href='#' component={"span"} mx={1} underline="hover" variant="body2" color={"inherit"}>© 2022 Twitter, Inc.</Link>
-                    {/* <Link
-                        component="button"
-                        variant="body2"
-                        onClick={() => {
-                            console.info("I'm a button.");
-                        }}
-                    >
-                        Button Link
-                    </Link>
-                    <Link
-                        component="button"
-                        variant="body2"
-                        onClick={() => {
-                            console.info("I'm a button.");
-                        }}
-                    >
-                        Button Link
-                    </Link> */}
                 </Grid>
             </Box>
+            </Box>
+            
     )
 }
