@@ -128,8 +128,8 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
     return (
         <div style={{ width: 664 }}>
             <Box style={{ marginTop : -6, width: 664, maxHight: "300px", boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 2px 0px' }} spacing={4} >
-                <Box sx={{ width: "664px" }}>
-                    <img src={"https://pbs.twimg.com/profile_banners/44196397/1576183471/1500x500"} alt="Background Image" width={664} height={220} />
+                <Box sx={{ width: "664px", background : '#CFD9DE', height :220  }}>
+                    {/* <img src={"https://pbs.twimg.com/profile_banners/44196397/1576183471/1500x500"} alt="Background Image" width={664} height={220} /> */}
                 </Box>
                 <Box
                     p={2}
