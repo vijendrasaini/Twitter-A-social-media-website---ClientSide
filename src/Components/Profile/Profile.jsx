@@ -19,6 +19,7 @@ import Tab from '@mui/material/Tab';
 import { Post } from '../Post/Post';
 import { BASE_URL } from '../../UniversalData/univeralData';
 import { toggleFollowingStatus } from '../../Redux/actionCreators';
+import axios from 'axios';
 
 
 
@@ -65,20 +66,13 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
     const [value, setValue] = useState(0);
     const [relevantData, setRelevantData] = useState([]);
     const [allPosts, setAllPosts] = useState([])
+    const [likedPosts, setLikedPosts] = useState([])
 
     const { user: { username }, followingStatus } = useSelector(store => store)
     const dispatch = useDispatch()
     const theme = useTheme();
 
-    // async function followOrUnfollow() {
-    //     const url = `${BASE_URL}/follow/${username}/${usernameB}`
-    //     const response = await fetch(url, {
-    //         method: "POST"
-    //     })
-    //     const result = await response.json()
-    //     console.log({ result })
-    // }
-
+   
     async function startFollowing() {
         // console.log("just statred")
         const url = `${BASE_URL}/follow/${username}/${usernameB}`
@@ -87,21 +81,20 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
         })
         const res = await response.json()
         dispatch(toggleFollowingStatus({
-            follow : true,
-            followers : followingStatus.followers + 1
+            follow: true,
+            followers: followingStatus.followers + 1
         }))
         // console.log({followingStatus})
     }
     async function doUnfollow() {
-        // console.log("just statred")
         const url = `${BASE_URL}/follow/${username}/${usernameB}`
         const response = await fetch(url, {
             method: "DELETE"
         })
         const res = await response.json()
         dispatch(toggleFollowingStatus({
-            follow : false,
-            followers : followingStatus.followers - 1
+            follow: false,
+            followers: followingStatus.followers - 1
         }))
     }
     useEffect(() => {
@@ -111,8 +104,10 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
             setRelevantData([2, "second"])
         else if (value == 2)
             setRelevantData([3, "third"])
-        else
+        else {
             setRelevantData([4, "forth"])
+            fetchLikedPosts()
+        }
 
 
     }, [value])
@@ -125,10 +120,20 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
         setValue(index);
     };
 
+    async function fetchLikedPosts() {
+        try {
+            const url = `${BASE_URL}/create-post/${username}`
+            const response = await axios.get(url)
+            setLikedPosts(response.data.likedPosts)
+        } catch (error) {
+            console.log(error.message)
+        }
+
+    }
     return (
         <div style={{ width: 664 }}>
-            <Box style={{ marginTop : -6, width: 664, maxHight: "300px", boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 2px 0px' }} spacing={4} >
-                <Box sx={{ width: "664px", background : '#CFD9DE', height :220  }}>
+            <Box style={{ marginTop: -6, width: 664, maxHight: "300px", boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 2px 0px' }} spacing={4} >
+                <Box sx={{ width: "664px", background: '#CFD9DE', height: 220 }}>
                     {/* <img src={"https://pbs.twimg.com/profile_banners/44196397/1576183471/1500x500"} alt="Background Image" width={664} height={220} /> */}
                 </Box>
                 <Box
@@ -356,10 +361,39 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                     <h1>No Tweets and replies</h1>
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
-                    <h1>No Media</h1>
+                    <Stack
+                        sx={{ width: "100%" }}
+                        direction="row"
+                        justifyContent={"center"}
+                    >
+                        <div>
+                            <img src="https://abs.twimg.com/sticky/illustrations/empty-states/masked-doll-head-with-camera-800x400.v1.png" alt="" height={200} />
+                            <h1 style={{ padding: 0, margin: 0 }}>Lights, camera … </h1>
+                            <h1 style={{ padding: 0, margin: 0 }}>attachments!</h1>
+                            <p>
+                                When you send Tweets with photos or videos in <br /> them, it will show up here.
+                            </p>
+                        </div>
+                    </Stack>
                 </TabPanel>
                 <TabPanel value={value} index={3} dir={theme.direction}>
-                    <h1>You don't have any post liked.</h1>
+                    {
+                        likedPosts.length ?  
+                        likedPosts.map(post => <Post key={post._id} {...post} />)
+                        : <Stack
+                            sx={{ width: "100%" }}
+                            direction="row"
+                            justifyContent={"center"}
+                        >
+                            <div style={{ width: 380 }}>
+                                <h1 style={{ marginBottom: 0 }}>You don't have any likes yet</h1>
+                                <p>
+                                    Tap the heart on any Tweet to show it some love. When you do, it'll show up here.
+                                </p>
+                            </div>
+                        </Stack>
+                    }
+
                 </TabPanel>
             </Box>
         </div>
