@@ -74,7 +74,6 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
 
    
     async function startFollowing() {
-        // console.log("just statred")
         const url = `${BASE_URL}/follow/${username}/${usernameB}`
         const response = await fetch(url, {
             method: "POST"
@@ -84,7 +83,6 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
             follow: true,
             followers: followingStatus.followers + 1
         }))
-        // console.log({followingStatus})
     }
     async function doUnfollow() {
         const url = `${BASE_URL}/follow/${username}/${usernameB}`
