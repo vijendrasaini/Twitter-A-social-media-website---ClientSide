@@ -1,8 +1,8 @@
 import { Avatar, Box, CardHeader, IconButton, Typography, Stack, Button, Link, Grid } from "@mui/material"
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../UniversalData/univeralData";
-import { SmallFollowCard } from "./Cards/SmallFollowCard";
+import { BASE_URL } from "../../UniversalData/univeralData";
+import { SmallFollowCard } from "../Cards/SmallFollowCard";
 
 
 

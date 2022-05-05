@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, Typography, IconButton } from "@mui/material"
 import { LeftMenu } from "../LeftMenu/LeftMenu"
-import { WhotoFollow } from "../WhotoFollow"
+import { WhotoFollow } from "../WhoToFollowBox/WhotoFollow"
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import VerifiedIcon from '@mui/icons-material/Verified';
@@ -18,7 +18,6 @@ import { Profile } from "../Profile/Profile";
 export const ProfileHome = () => {
 
     const [profile, setProfile] = useState({})
-    // const [fs, setFs] = useState(null)
 
     const { username: usernameB } = useParams()
     const navigate = useNavigate()
@@ -32,13 +31,10 @@ export const ProfileHome = () => {
         const res1 = await fetch(`${BASE_URL}/profile/${username}/${usernameB}`)
         const profile = await res1.json()
         setProfile(profile)
-        // console.log(profile)
-        // setFs(profile.status)
         dispatch(toggleFollowingStatus({
             follow: profile.status ? true : false,
             followers: profile.followers
         }))
-        // console.log({followingStatus})
     }
     useEffect(() => {
 
