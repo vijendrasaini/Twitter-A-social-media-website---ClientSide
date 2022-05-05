@@ -158,7 +158,7 @@ export const Post = ({ title, avatar, image, name, username, createdAt, likes, _
                         padding="10px"
                     >
                         <Link style={{ textDecoration: "none", color: "black" }} to={`/${username}`}>
-                            <Avatar sx={{ width: 56, height: 56 }} src={avatar} />
+                            <Avatar sx={{ width: 56, height: 56 }} src={avatar} alt="profile picture"/>
                         </Link>
                     </Box>
                 </Stack>
