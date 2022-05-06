@@ -28,13 +28,17 @@ export const ProfileHome = () => {
         getProfile()
     }, [usernameB])
     async function getProfile() {
-        const res1 = await fetch(`${BASE_URL}/profile/${username}/${usernameB}`)
-        const profile = await res1.json()
-        setProfile(profile)
-        dispatch(toggleFollowingStatus({
-            follow: profile.status ? true : false,
-            followers: profile.followers
-        }))
+        try {
+            const res1 = await fetch(`${BASE_URL}/profile/${username}/${usernameB}`)
+            const profile = await res1.json()
+            setProfile(profile)
+            dispatch(toggleFollowingStatus({
+                follow: profile.status ? true : false,
+                followers: profile.followers
+            }))
+        } catch (error) {
+            console.log(error.message)
+        }
     }
     useEffect(() => {
 
