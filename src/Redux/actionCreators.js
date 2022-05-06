@@ -1,11 +1,11 @@
-import { FOLLOWING_STATUS, ISSEARCHING, LODING, SETSEARCHRESULT, SETUSER} from './actions'
+import { FOLLOWING_STATUS, ISSEARCHING, LOADING, SETSEARCHRESULT, SETUSER} from './actions'
 
 
 export const setUser = (payload)=>({ type : SETUSER , payload})
 export const setSearchResult = (payload)=>({type : SETSEARCHRESULT, payload})
 export const setIsSearching = (payload)=>({type : ISSEARCHING, payload})
 export const toggleFollowingStatus = (payload) => ({ type : FOLLOWING_STATUS, payload})
-export const setLoing = (payload) => ({ type : LODING, payload})
+export const setLoading = (payload) => ({ type : LOADING, payload})
 
 export const performSearch = (searchText)=> async (dispatch)=>{
     if(searchText == "")
