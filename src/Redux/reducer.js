@@ -4,7 +4,10 @@ import {FOLLOWING_STATUS, ISSEARCHING, LOADING,SETSEARCHRESULT, SETUSER} from '.
 
 const initState = {
     user : JSON.parse(localStorage.getItem('user')),
-    loading : false,
+    loading : {
+        dashBoardLoading : false,
+        postLoading : false
+    },
     searchArr : [],
     isSearching : false,
     followingStatus : {
