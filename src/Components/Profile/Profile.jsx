@@ -122,7 +122,7 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
     async function fetchLikedPosts() {
         dispatch(setLoading({...loading, postLoading : true}))
         try {
-            const url = `${BASE_URL}/create-post/${username}`
+            const url = `${BASE_URL}/create-post/${usernameB}`
             const response = await axios.get(url)
             setLikedPosts(response.data.likedPosts)
         } catch (error) {
