@@ -20,6 +20,8 @@ import { Post } from '../Post/Post';
 import { BASE_URL } from '../../UniversalData/univeralData';
 import { toggleFollowingStatus } from '../../Redux/actionCreators';
 import axios from 'axios';
+import { UnFollowToggleBtn } from '../Buttons/UnFollowToggleBtn';
+import { FollowBtn } from '../Buttons/FollowBtn';
 
 
 
@@ -61,18 +63,19 @@ function normalCase(string) {
 
 export const Profile = ({ name, username: usernameB, avatar, joined, followers, following, posts, status }) => {
 
-    const initialText = "Follwing"
-    const [buttonText, setButtonText] = useState(initialText)
+    // const initialText = "Follwing"
+    // const [buttonText, setButtonText] = useState(initialText)
     const [value, setValue] = useState(0);
     const [relevantData, setRelevantData] = useState([]);
     const [allPosts, setAllPosts] = useState([])
     const [likedPosts, setLikedPosts] = useState([])
+    // const [followingStatus,toggleFollowingStatus] = 
 
     const { user: { username }, followingStatus } = useSelector(store => store)
     const dispatch = useDispatch()
     const theme = useTheme();
 
-   
+
     async function startFollowing() {
         const url = `${BASE_URL}/follow/${username}/${usernameB}`
         const response = await fetch(url, {
@@ -160,59 +163,11 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                                             <IconButton sx={{ border: "1px solid #dfe3e4" }}>
                                                 <NotificationsNoneIcon />
                                             </IconButton>
-                                            <Button
-                                                fullWidth
-                                                variant="contained"
-                                                sx={{
-                                                    bgcolor: 'white',
-                                                    color: 'black',
-                                                    borderRadius: "99px",
-                                                    fontWeight: '600',
-                                                    textTransform: 'none',
-                                                    boxShadow: "none",
-                                                    border: "1px solid #dfe3e4",
-                                                    width: '130px',
-                                                    fontSize: "16px",
-                                                    '&:hover':
-                                                    {
-                                                        background: 'white',
-                                                        color: 'red',
-                                                        boxShadow: "none",
-                                                        borderColor: "red"
-                                                    }
-                                                }}
-                                                onMouseOver={() => setButtonText('unfollow')}
-                                                onMouseLeave={() => setButtonText(initialText)}
-                                                onClick={doUnfollow}
-                                            >{buttonText}
-                                            </Button>
+                                            <UnFollowToggleBtn doUnfollow={doUnfollow} />
                                         </>
                                         :
-                                        <Button
-                                            onClick={startFollowing}
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{
-                                                mt: 2,
-                                                mb: 2,
-                                                borderRadius: "99px",
-                                                boxShadow: "0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25)",
-                                                fontSize: "16px",
-                                                fontWeight: '600',
-                                                textTransform: 'none',
-                                                background: 'black',
-                                                color: 'white',
-                                                paddingY: "9px",
-                                                '&:hover': {
-                                                    color: 'white',
-                                                    background: '#171717'
-                                                }
-                                            }}
-                                        >
-                                            Follow
-                                        </Button>
+                                        <FollowBtn startFollowing={startFollowing} />
                                 }
-
                             </Stack> :
                             <Button
                                 fullWidth
@@ -233,7 +188,6 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                                         boxShadow: "none"
                                     }
                                 }}
-                            // onClick={editProfile}
                             >Edit profile
                             </Button>
                         }
@@ -376,20 +330,20 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                 </TabPanel>
                 <TabPanel value={value} index={3} dir={theme.direction}>
                     {
-                        likedPosts.length ?  
-                        likedPosts.map(post => <Post key={post._id} {...post} />)
-                        : <Stack
-                            sx={{ width: "100%" }}
-                            direction="row"
-                            justifyContent={"center"}
-                        >
-                            <div style={{ width: 380 }}>
-                                <h1 style={{ marginBottom: 0 }}>You don't have any likes yet</h1>
-                                <p>
-                                    Tap the heart on any Tweet to show it some love. When you do, it'll show up here.
-                                </p>
-                            </div>
-                        </Stack>
+                        likedPosts.length ?
+                            likedPosts.map(post => <Post key={post._id} {...post} />)
+                            : <Stack
+                                sx={{ width: "100%" }}
+                                direction="row"
+                                justifyContent={"center"}
+                            >
+                                <div style={{ width: 380 }}>
+                                    <h1 style={{ marginBottom: 0 }}>You don't have any likes yet</h1>
+                                    <p>
+                                        Tap the heart on any Tweet to show it some love. When you do, it'll show up here.
+                                    </p>
+                                </div>
+                            </Stack>
                     }
 
                 </TabPanel>
