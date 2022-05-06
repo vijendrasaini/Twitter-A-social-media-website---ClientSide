@@ -1,10 +1,10 @@
-import {FOLLOWING_STATUS, ISSEARCHING, LODING, SETSEARCHRESULT, SETUSER} from './actions'
+import {FOLLOWING_STATUS, ISSEARCHING, LOADING,SETSEARCHRESULT, SETUSER} from './actions'
 
 
 
 const initState = {
     user : JSON.parse(localStorage.getItem('user')),
-    loding : false,
+    loading : false,
     searchArr : [],
     isSearching : false,
     followingStatus : {
@@ -22,8 +22,8 @@ export const reducer = (state = initState, { type, payload})=>{
             return { ...state, searchArr : payload}
         case FOLLOWING_STATUS:
             return { ...state, followingStatus : payload}
-        case LODING:
-            return { ...state, loding : payload}
+        case LOADING:
+            return { ...state, loading : payload}
         default : 
             return state
     }
