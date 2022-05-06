@@ -7,7 +7,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -23,6 +22,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import PushPinIcon from '@mui/icons-material/PushPin';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import CodeIcon from '@mui/icons-material/Code';
+import BarChartIcon from '@mui/icons-material/BarChart';
 // import Button from '@mui/material/Button';
 // import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 // import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -276,33 +281,94 @@ export const Post = ({ title, avatar, image, name, username, createdAt, likes, _
                             <MoreHorizIcon />
                         </IconButton>
                     </span>
-                    <StyledMenu
-                        id="demo-customized-menu"
-                        MenuListProps={{
-                            'aria-labelledby': 'demo-customized-button',
-                        }}
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                    >
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <EditIcon />
-                            Edit
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <FileCopyIcon />
-                            Duplicate
-                        </MenuItem>
-                        <Divider sx={{ my: 0.5 }} />
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <ArchiveIcon />
-                            Archive
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <MoreHorizIcon />
-                            More
-                        </MenuItem>
-                    </StyledMenu>
+                    {
+                        username == self ?
+                        <StyledMenu
+                            id="demo-customized-menu"
+                            MenuListProps={{
+                                'aria-labelledby': 'demo-customized-button',
+                            }}
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            sx={{
+                                marginTop : -6.5,
+                                fontSize : 17,
+                                color : "black"
+                            }}
+
+                        >
+                            <MenuItem
+                            sx={{ color : "black", py : 2, fontSize : 17}}
+                            onClick={handleClose} disableRipple>
+                                    <DeleteOutlineIcon />
+                                Delete
+                            </MenuItem>
+                            <MenuItem
+                            sx={{ color : "black", py : 2, fontSize : 17}}
+                            onClick={handleClose} disableRipple>
+                                    <PushPinIcon />
+                                Pin to your profile
+                            </MenuItem>
+                            <MenuItem
+                            sx={{ color : "black", py : 2, fontSize : 17}}
+                            onClick={handleClose} disableRipple>
+                                    <ArchiveIcon />
+                                Add/remove @ervijendra2001 from Lists
+                            </MenuItem>
+                            <MenuItem
+                            sx={{ color : "black", py : 2, fontSize : 17}}
+                            onClick={handleClose} disableRipple>
+                                    <ChatBubbleOutlineIcon />
+                                Change who can reply
+                            </MenuItem>
+                            <MenuItem
+                            sx={{ color : "black", py : 2, fontSize : 17}}
+                            onClick={handleClose} disableRipple>
+                                    <CodeIcon />
+                                Embed Tweet
+                            </MenuItem>
+                            <MenuItem
+                            sx={{ color : "black", py : 2, fontSize : 17}}
+                            onClick={handleClose} disableRipple>
+                                    <BarChartIcon />
+                                View Tweet analytics
+                            </MenuItem>
+                        </StyledMenu>
+                        :
+                        <StyledMenu
+                            id="demo-customized-menu"
+                            MenuListProps={{
+                                'aria-labelledby': 'demo-customized-button',
+                            }}
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            sx={{
+                                marginTop : -6.5
+                            }}
+                        >
+                            <MenuItem
+                            onClick={handleClose} disableRipple>
+                                <DeleteOutlineIcon />
+                                Delete
+                            </MenuItem>
+                            <MenuItem onClick={handleClose} disableRipple>
+                                <FileCopyIcon />
+                                Duplicate
+                            </MenuItem>
+                            <Divider sx={{ my: 0.5 }} />
+                            <MenuItem onClick={handleClose} disableRipple>
+                                <ArchiveIcon />
+                                Archive
+                            </MenuItem>
+                            <MenuItem onClick={handleClose} disableRipple>
+                                <MoreHorizIcon />
+                                More
+                            </MenuItem>
+                        </StyledMenu>
+
+                    }
                 </Stack>
             </Stack>
         </Card >
