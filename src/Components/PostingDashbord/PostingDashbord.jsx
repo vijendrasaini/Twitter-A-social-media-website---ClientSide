@@ -46,7 +46,7 @@ export const PostingDashbord = () => {
         if (previewSource)
             body.image = previewSource
         const url = `${BASE_URL}/create-post`
-        dispatch(setLoading(true))
+        dispatch(setLoading({ ...loading, dashBoard : true }))
         try {
             setPreviewSource(null)
             setTweetText("")
@@ -54,7 +54,7 @@ export const PostingDashbord = () => {
         } catch (error) {
             console.log(error.message)
         }
-        dispatch(setLoading(false))
+        dispatch(setLoading({ ...loading, dashBoard : false }))
         window.location.reload()
     }
     return (
@@ -127,10 +127,6 @@ export const PostingDashbord = () => {
                     <img src={previewSource} alt="file to be uploaded." className='preview' />
                 </div>
             )}
-            {/* <Dialog
-                open={loading}
-            >
-            </Dialog> */}
         </Box>
     )
 }
