@@ -1,14 +1,12 @@
 import './pd.css'
-import { useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { Avatar, IconButton, TextField } from "@mui/material";
+import { Avatar, CircularProgress, Dialog, IconButton, LinearProgress } from "@mui/material";
 import { Box } from "@mui/material"
 import { Button, Stack } from '@mui/material'
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 
 
-import CollectionsIcon from '@mui/icons-material/Collections';
 import GifBoxIcon from '@mui/icons-material/GifBox';
 import PollIcon from '@mui/icons-material/Poll';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
@@ -16,16 +14,19 @@ import ScheduleIcon from '@mui/icons-material/Schedule';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { BASE_URL } from '../../UniversalData/univeralData';
+import axios from 'axios'
+import { setLoading } from '../../Redux/actionCreators';
 
 
 
 export const PostingDashbord = () => {
 
-    const [tweetText, setTweetText] = useState("")    
+    const [tweetText, setTweetText] = useState("")
     const [previewSource, setPreviewSource] = useState(null)
+    const dispatch = useDispatch()
 
-    
-    const { user : { username, avatar, name}} = useSelector(store=>store)
+    const { user: { username, avatar, name }, loading } = useSelector(store => store)
 
     const handleFileInputChange = (e) => {
         const file = e.target.files[0]
@@ -39,22 +40,22 @@ export const PostingDashbord = () => {
         }
     }
     const postATweet = async () => {
-        const body = {username, name, avatar}
-        if(tweetText!= "")
+        const body = { username, name, avatar }
+        if (tweetText != "")
             body.title = tweetText
-        if(previewSource)
+        if (previewSource)
             body.image = previewSource
-        
-        const response = await fetch('http://localhost:7000/create-post',{
-            method : "POST",
-            body : JSON.stringify(body),
-            headers : {
-                'content-type' : "application/json"
-            }
-        })
-        const sure = await response.json()
-        setPreviewSource(null)
-        setTweetText("")
+        const url = `${BASE_URL}/create-post`
+        dispatch(setLoading(true))
+        try {
+            setPreviewSource(null)
+            setTweetText("")
+            const response = await axios.post(url, body)
+        } catch (error) {
+            console.log(error.message)
+        }
+        dispatch(setLoading(false))
+        window.location.reload()
     }
     return (
         <Box
@@ -118,14 +119,18 @@ export const PostingDashbord = () => {
                             <LocationOnIcon />
                         </IconButton>
                     </Stack>
-                    <Button onClick={postATweet} disabled={( tweetText == "" && (!previewSource)) ? true : false} variant="contained" sx={{ fontSize: 18, borderRadius: "99px", fontWeight: "bold", textTransform: 'none' }}>Tweet</Button>
+                    <Button onClick={postATweet} disabled={(tweetText == "" && (!previewSource)) ? true : false} variant="contained" sx={{ fontSize: 18, borderRadius: "99px", fontWeight: "bold", textTransform: 'none' }}>Tweet</Button>
                 </Stack>
             </Stack>
-            { previewSource && (
+            {previewSource && (
                 <div className='preview-container' >
-                    <img src={previewSource} alt="file to be uploaded." className='preview'/>
+                    <img src={previewSource} alt="file to be uploaded." className='preview' />
                 </div>
-            ) }
+            )}
+            {/* <Dialog
+                open={loading}
+            >
+            </Dialog> */}
         </Box>
     )
 }
