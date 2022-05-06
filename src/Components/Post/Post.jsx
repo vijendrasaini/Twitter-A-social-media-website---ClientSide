@@ -1,4 +1,3 @@
-// import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
@@ -18,19 +17,19 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import { styled, alpha } from '@mui/material/styles';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import EditIcon from '@mui/icons-material/Edit';
-import Divider from '@mui/material/Divider';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
+
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PushPinIcon from '@mui/icons-material/PushPin';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import ArchiveIcon from '@mui/icons-material/Archive';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import CodeIcon from '@mui/icons-material/Code';
 import BarChartIcon from '@mui/icons-material/BarChart';
-// import Button from '@mui/material/Button';
-// import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import NoAccountsIcon from '@mui/icons-material/NoAccounts';
+import VolumeOffIcon from '@mui/icons-material/VolumeOff';
+import BlockIcon from '@mui/icons-material/Block';
+import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
@@ -71,44 +70,44 @@ function timeSince(timeStamp, date) {
 
 const StyledMenu = styled((props) => (
     <Menu
-      elevation={0}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'right',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      {...props}
+        elevation={0}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+        }}
+        {...props}
     />
-  ))(({ theme }) => ({
+))(({ theme }) => ({
     '& .MuiPaper-root': {
-      borderRadius: 6,
-      marginTop: theme.spacing(1),
-      minWidth: 180,
-      color:
-        theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
-      boxShadow:
-        'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
-      '& .MuiMenu-list': {
-        padding: '4px 0',
-      },
-      '& .MuiMenuItem-root': {
-        '& .MuiSvgIcon-root': {
-          fontSize: 18,
-          color: theme.palette.text.secondary,
-          marginRight: theme.spacing(1.5),
+        borderRadius: 6,
+        marginTop: theme.spacing(1),
+        minWidth: 180,
+        color:
+            theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+        boxShadow:
+            'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+        '& .MuiMenu-list': {
+            padding: '4px 0',
         },
-        '&:active': {
-          backgroundColor: alpha(
-            theme.palette.primary.main,
-            theme.palette.action.selectedOpacity,
-          ),
+        '& .MuiMenuItem-root': {
+            '& .MuiSvgIcon-root': {
+                fontSize: 18,
+                color: theme.palette.text.secondary,
+                marginRight: theme.spacing(1.5),
+            },
+            '&:active': {
+                backgroundColor: alpha(
+                    theme.palette.primary.main,
+                    theme.palette.action.selectedOpacity,
+                ),
+            },
         },
-      },
     },
-  }));
+}));
 
 
 export const Post = ({ title, avatar, image, name, username, createdAt, likes, _id }) => {
@@ -163,7 +162,7 @@ export const Post = ({ title, avatar, image, name, username, createdAt, likes, _
                         padding="10px"
                     >
                         <Link style={{ textDecoration: "none", color: "black" }} to={`/${username}`}>
-                            <Avatar sx={{ width: 56, height: 56 }} src={avatar} alt="profile picture"/>
+                            <Avatar sx={{ width: 56, height: 56 }} src={avatar} alt="profile picture" />
                         </Link>
                     </Box>
                 </Stack>
@@ -283,91 +282,117 @@ export const Post = ({ title, avatar, image, name, username, createdAt, likes, _
                     </span>
                     {
                         username == self ?
-                        <StyledMenu
-                            id="demo-customized-menu"
-                            MenuListProps={{
-                                'aria-labelledby': 'demo-customized-button',
-                            }}
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            sx={{
-                                marginTop : -6.5,
-                                fontSize : 17,
-                                color : "black"
-                            }}
+                            <StyledMenu
+                                id="demo-customized-menu"
+                                MenuListProps={{
+                                    'aria-labelledby': 'demo-customized-button',
+                                }}
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                                sx={{
+                                    marginTop: -6.5,
+                                    fontSize: 17,
+                                    color: "black"
+                                }}
 
-                        >
-                            <MenuItem
-                            sx={{ color : "black", py : 2, fontSize : 17}}
-                            onClick={handleClose} disableRipple>
+                            >
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
                                     <DeleteOutlineIcon />
-                                Delete
-                            </MenuItem>
-                            <MenuItem
-                            sx={{ color : "black", py : 2, fontSize : 17}}
-                            onClick={handleClose} disableRipple>
+                                    Delete
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
                                     <PushPinIcon />
-                                Pin to your profile
-                            </MenuItem>
-                            <MenuItem
-                            sx={{ color : "black", py : 2, fontSize : 17}}
-                            onClick={handleClose} disableRipple>
+                                    Pin to your profile
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
                                     <ArchiveIcon />
-                                Add/remove @ervijendra2001 from Lists
-                            </MenuItem>
-                            <MenuItem
-                            sx={{ color : "black", py : 2, fontSize : 17}}
-                            onClick={handleClose} disableRipple>
+                                    Add/remove {`@${username}`} from Lists
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
                                     <ChatBubbleOutlineIcon />
-                                Change who can reply
-                            </MenuItem>
-                            <MenuItem
-                            sx={{ color : "black", py : 2, fontSize : 17}}
-                            onClick={handleClose} disableRipple>
+                                    Change who can reply
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
                                     <CodeIcon />
-                                Embed Tweet
-                            </MenuItem>
-                            <MenuItem
-                            sx={{ color : "black", py : 2, fontSize : 17}}
-                            onClick={handleClose} disableRipple>
+                                    Embed Tweet
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
                                     <BarChartIcon />
-                                View Tweet analytics
-                            </MenuItem>
-                        </StyledMenu>
-                        :
-                        <StyledMenu
-                            id="demo-customized-menu"
-                            MenuListProps={{
-                                'aria-labelledby': 'demo-customized-button',
-                            }}
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            sx={{
-                                marginTop : -6.5
-                            }}
-                        >
-                            <MenuItem
-                            onClick={handleClose} disableRipple>
-                                <DeleteOutlineIcon />
-                                Delete
-                            </MenuItem>
-                            <MenuItem onClick={handleClose} disableRipple>
-                                <FileCopyIcon />
-                                Duplicate
-                            </MenuItem>
-                            <Divider sx={{ my: 0.5 }} />
-                            <MenuItem onClick={handleClose} disableRipple>
-                                <ArchiveIcon />
-                                Archive
-                            </MenuItem>
-                            <MenuItem onClick={handleClose} disableRipple>
-                                <MoreHorizIcon />
-                                More
-                            </MenuItem>
-                        </StyledMenu>
+                                    View Tweet analytics
+                                </MenuItem>
+                            </StyledMenu>
+                            :
+                            <StyledMenu
+                                id="demo-customized-menu"
+                                MenuListProps={{
+                                    'aria-labelledby': 'demo-customized-button',
+                                }}
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                                sx={{
+                                    marginTop: -6.5,
+                                    fontSize: 17,
+                                    color: "black"
+                                }}
 
+                            >
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
+                                    <SentimentVeryDissatisfiedIcon />
+                                    Not interested in this Tweet
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
+                                    <NoAccountsIcon />
+                                    Unfollow {`@${username}`}
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
+                                    <ChatBubbleOutlineIcon />
+                                    Add/remove {`@${username}`} from Lists
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
+                                    <VolumeOffIcon />
+                                    Mute {`@${username}`}
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
+                                    <BlockIcon />
+                                    Block {`@${username}`}
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
+                                    <CodeIcon />
+                                    Embed Tweet
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{ color: "black", py: 2, fontSize: 17 }}
+                                    onClick={handleClose} disableRipple>
+                                    <FlagCircleIcon />
+                                    Report Tweet
+                                </MenuItem>
+                            </StyledMenu>
                     }
                 </Stack>
             </Stack>
