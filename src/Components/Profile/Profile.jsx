@@ -18,10 +18,11 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Post } from '../Post/Post';
 import { BASE_URL } from '../../UniversalData/univeralData';
-import { toggleFollowingStatus } from '../../Redux/actionCreators';
+import { setLoading, toggleFollowingStatus } from '../../Redux/actionCreators';
 import axios from 'axios';
 import { UnFollowToggleBtn } from '../Buttons/UnFollowToggleBtn';
 import { FollowBtn } from '../Buttons/FollowBtn';
+import { Loading } from '../Loading/Loading';
 
 
 
@@ -63,15 +64,12 @@ function normalCase(string) {
 
 export const Profile = ({ name, username: usernameB, avatar, joined, followers, following, posts, status }) => {
 
-    // const initialText = "Follwing"
-    // const [buttonText, setButtonText] = useState(initialText)
     const [value, setValue] = useState(0);
     const [relevantData, setRelevantData] = useState([]);
     const [allPosts, setAllPosts] = useState([])
     const [likedPosts, setLikedPosts] = useState([])
-    // const [followingStatus,toggleFollowingStatus] = 
-
-    const { user: { username }, followingStatus } = useSelector(store => store)
+    
+    const { user: { username }, followingStatus, loading } = useSelector(store => store)
     const dispatch = useDispatch()
     const theme = useTheme();
 
@@ -122,6 +120,7 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
     };
 
     async function fetchLikedPosts() {
+        dispatch(setLoading({...loading, postLoading : true}))
         try {
             const url = `${BASE_URL}/create-post/${username}`
             const response = await axios.get(url)
@@ -129,7 +128,7 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
         } catch (error) {
             console.log(error.message)
         }
-
+        dispatch(setLoading({...loading, postLoading : false}))
     }
     return (
         <div style={{ width: 664 }}>
@@ -307,7 +306,10 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                     {posts?.length == 0 &&
                         (username == usernameB ? <h1>Start Posting tweets on twitter world.</h1> : <h1>No posts from {normalCase(name)}</h1>)
                     }
-                    {posts?.map(post => <Post key={post._id} {...post} />)}
+                    {
+                        loading.postLoading ? <Loading/> :
+                        posts?.map(post => <Post key={post._id} {...post} />)
+                    }
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
                     <h1>No Tweets and replies</h1>
@@ -329,23 +331,26 @@ export const Profile = ({ name, username: usernameB, avatar, joined, followers, 
                     </Stack>
                 </TabPanel>
                 <TabPanel value={value} index={3} dir={theme.direction}>
-                    {
-                        likedPosts.length ?
-                            likedPosts.map(post => <Post key={post._id} {...post} />)
-                            : <Stack
-                                sx={{ width: "100%" }}
-                                direction="row"
-                                justifyContent={"center"}
-                            >
-                                <div style={{ width: 380 }}>
-                                    <h1 style={{ marginBottom: 0 }}>You don't have any likes yet</h1>
-                                    <p>
-                                        Tap the heart on any Tweet to show it some love. When you do, it'll show up here.
-                                    </p>
-                                </div>
-                            </Stack>
-                    }
 
+                    {
+                        loading?.postLoading ? <Loading/> :
+                        (
+                            likedPosts.length ?
+                                likedPosts.map(post => <Post key={post._id} {...post} />)
+                                : <Stack
+                                    sx={{ width: "100%" }}
+                                    direction="row"
+                                    justifyContent={"center"}
+                                >
+                                    <div style={{ width: 380 }}>
+                                        <h1 style={{ marginBottom: 0 }}>You don't have any likes yet</h1>
+                                        <p>
+                                            Tap the heart on any Tweet to show it some love. When you do, it'll show up here.
+                                        </p>
+                                    </div>
+                                </Stack>
+                        )
+                    }
                 </TabPanel>
             </Box>
         </div>
