@@ -12,14 +12,7 @@ export const SearchBox = () => {
     const dispatch = useDispatch()
     const id = useRef(null)
     function debounce(){
-        // if(id.current)
-        //     {
-        //         clearTimeout(id.current)
-        //         id.current = null
-        //     }
-        // id.current = setTimeout(()=>{
             dispatch(performSearch(searchText))
-        // }, 400)
     }
     return (
         <>
