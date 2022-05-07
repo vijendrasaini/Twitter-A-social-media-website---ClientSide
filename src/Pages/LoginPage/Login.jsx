@@ -67,7 +67,10 @@ export const Login = () => {
         disptach(setUser(user))
         navigate('/home')  
     }
-    const errorResponseGoogle = (error) => setOpenGoogleAlert(true)
+    const errorResponseGoogle = (error) =>{
+         setOpenGoogleAlert(true)
+         console.log(error)
+        }
     const handleGoogleAlert = ()=>setOpenGoogleAlert(false)
     return (
         <>
