@@ -7,6 +7,7 @@ In this project I have tried to make a look alike clone of Twitter, which is a s
 
 ### 1. Sign In or Sign Up Page
 ![Login page](https://github.com/vijendrasaini/Twitter-A-social-media-website---ClientSide/blob/master/assets/Screenshot%20(2345).png)
+### 1. Sign In or Sign Up Page with Google Oauth
 ![Google Oauth](https://github.com/vijendrasaini/Twitter-A-social-media-website---ClientSide/blob/master/assets/Screenshot%20(2346).png)
 
 
@@ -14,5 +15,5 @@ In this project I have tried to make a look alike clone of Twitter, which is a s
 ![Home Page with Search Results](https://github.com/vijendrasaini/Twitter-A-social-media-website---ClientSide/blob/master/assets/Screenshot%20(2349).png)
 
 
-#### 3. Profile Page
+### 3. Profile Page
 ![Profile Page](https://github.com/vijendrasaini/Twitter-A-social-media-website---ClientSide/blob/master/assets/Screenshot%20(2348).png)
