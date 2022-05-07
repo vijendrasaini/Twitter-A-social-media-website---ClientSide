@@ -19,6 +19,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { FormControl, IconButton, InputLabel, MenuItem, Select, Stack } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../Redux/actionCreators';
+import { BASE_URL } from '../../UniversalData/univeralData';
 
 
 export const Login = () => {
@@ -41,7 +42,7 @@ export const Login = () => {
 
     const responseGoogle = async (response) => {
         setDate({ ...date, tokenId : response.tokenId})
-        const url = `http://localhost:7000/google/signin`
+        const url = `${BASE_URL}/google/signin`
         const res = await axios.post(url, { tokenId : response.tokenId})
         if(res.data.status == 'failure')
             setOpenGoogleAlert(true)
@@ -53,7 +54,7 @@ export const Login = () => {
         }
     }
     const signInDate = async () => {
-        const url = `http://localhost:7000/google/signin`
+        const url = `${BASE_URL}/google/signin`
         const res = await axios.post(url, date )
         console.log(res.data)
         if(res.data.status == "failure")
